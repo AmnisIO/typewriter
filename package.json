@@ -4,6 +4,7 @@
   "description": "The transpiler used to convert TypeScript to C for AmnisIO",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
+  "bin": "bin/typewriter.js",
   "author": "Sudarsan Balaji<Sudarsan.Balaji@outlook.com>",
   "license": "MIT",
   "scripts": {
@@ -15,6 +16,7 @@
     "change-case": "^3.0.1",
     "fs": "^0.0.1-security",
     "path": "^0.12.7",
-    "typescript": "^2.3.4"
+    "typescript": "^2.3.4",
+    "yargs": "^8.0.2"
   }
 }
