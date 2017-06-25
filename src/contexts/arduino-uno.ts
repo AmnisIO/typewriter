@@ -1,4 +1,5 @@
 export const context = {
+  include_headers: 'Arduino',
   Sources: 'Sources*',
   Sinks: 'Sinks*',
   createSinks: 'sinks_create',
