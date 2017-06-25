@@ -10,7 +10,7 @@ interface IndexedContexts {
   [x: string]: Context;
 }
 
-const contexts = {
+const contexts: IndexedContexts = {
   'arduino-uno': unoContext,
   rivulet: rivuletContext
 };
