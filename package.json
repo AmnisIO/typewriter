@@ -1,7 +1,7 @@
 {
   "name": "@amnisio/typewriter",
   "version": "0.0.6",
-  "description": "The RIoT transpiler which compiles TypeScript into the required C code",
+  "description": "The transpiler used to convert TypeScript to C for AmnisIO",
   "main": "index.js",
   "author": "Sudarsan Balaji<Sudarsan.Balaji@outlook.com>",
   "license": "MIT",
