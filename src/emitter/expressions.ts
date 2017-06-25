@@ -2,10 +2,18 @@ import { SyntaxKind, CallExpression, Identifier, ConditionalExpression, BinaryEx
 import { Context } from '../contexts';
 import { EmitResult, emit, emitString } from './';
 
-export const emitCallExpression = (node: CallExpression, context: Context): EmitResult => ({
-  context,
-  emitted_string: `${emitString(node.expression, context)}(${node.arguments.map(a => emitString(a, context)).join(', ')})`
-});
+export const emitCallExpression = ({ expression, ...node }: CallExpression, context: Context) => {
+  let self_reference_emit = '';
+  if (expression.kind === SyntaxKind.PropertyAccessExpression) {
+    const self_reference = (expression as PropertyAccessExpression).expression;
+    self_reference_emit = emitString(self_reference, context) + ', ';
+  }
+  const emitted_string = `${emitString(expression, context)}(${self_reference_emit}${node.arguments.map(arg => emitString(arg, context)).join(', ')})`;
+  return {
+    context,
+    emitted_string
+  };
+};;
 
 export const emitConditionalExpression = ({ condition, questionToken, whenTrue, colonToken, whenFalse }: ConditionalExpression, context: Context): EmitResult => ({
   context,
