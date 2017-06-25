@@ -18,7 +18,9 @@
     "build": "tsc"
   },
   "devDependencies": {
-    "@types/node": "^7.0.29",
+    "@types/node": "^7.0.29"
+  },
+  "dependencies": {
     "change-case": "^3.0.1",
     "fs": "^0.0.1-security",
     "path": "^0.12.7",
