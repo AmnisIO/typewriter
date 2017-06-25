@@ -1,7 +1,7 @@
 import { ImportDeclaration, NamedImports, StringLiteral } from 'typescript';
 import { Context, getContext } from '../contexts';
 import { EmitResult } from './';
-import { titleCase } from 'change-case';
+// import { titleCase } from 'change-case';
 
 export const emitImportDeclaration = (node: ImportDeclaration, context: Context): EmitResult => {
   const module_specifier = (node.moduleSpecifier as StringLiteral).text.split('/').pop();
