@@ -1,8 +1,8 @@
-import { Node, SyntaxKind, SourceFile, TypeReferenceNode, Identifier, Block, ExpressionStatement, BinaryExpression, PropertyAccessExpression } from 'typescript';
+import { Node, SyntaxKind, SourceFile, TypeReferenceNode, Identifier, Block, ExpressionStatement, BinaryExpression, PropertyAccessExpression, LiteralLikeNode } from 'typescript';
 import { emitImportDeclaration } from './imports';
 import { emitFunctionLikeDeclaration, emitVariableDeclaration } from './declarations';
 import { emitCallExpression, emitConditionalExpression, emitBinaryExpression, emitPropertyAccessExpression } from './expressions';
-import { emitColonToken, emitQuestionToken, emitEqualsEqualsToken, emitFirstAssignmentToken } from './tokens';
+import { emitColonToken, emitQuestionToken, emitEqualsEqualsToken, emitFirstAssignmentToken, emitFirstLiteralToken } from './tokens';
 import { emitIdentifier, emitType } from './identifiers';
 import { emitBlock } from './blocks';
 import { emitSourceFile } from './source';
@@ -83,6 +83,8 @@ export const emit = (node: Node, context: Context): EmitResult => {
       return emitColonToken(<any>node, context);
     case SyntaxKind.FirstAssignment:
       return emitFirstAssignmentToken(node, context);
+    case SyntaxKind.FirstLiteralToken:
+      return emitFirstLiteralToken(<LiteralLikeNode>node, context);
     case SyntaxKind.EndOfFileToken:
       return { context, emitted_string: '\n' };
 

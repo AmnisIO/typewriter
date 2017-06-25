@@ -1,4 +1,4 @@
-import { QuestionToken, ColonToken, Token, SyntaxKind, Node } from 'typescript';
+import { QuestionToken, ColonToken, Token, SyntaxKind, Node, LiteralLikeNode } from 'typescript';
 import { Context } from '../contexts';
 import { EmitResult, emit, emitString } from './';
 
@@ -21,3 +21,8 @@ export const emitFirstAssignmentToken = (node: Node, context: Context): EmitResu
   context,
   emitted_string: '='
 });
+
+export const emitFirstLiteralToken = ({ text }: LiteralLikeNode, context: Context): EmitResult => ({
+  context,
+  emitted_string: text
+})
