@@ -1,6 +1,6 @@
 {
   "name": "@amnisio/typewriter",
-  "version": "0.0.1",
+  "version": "0.0.4",
   "description": "The RIoT transpiler which compiles TypeScript into the required C code",
   "main": "index.js",
   "author": "Sudarsan Balaji<Sudarsan.Balaji@outlook.com>",
