@@ -1,9 +1,9 @@
 import { context as unoContext } from './arduino-uno';
+import { context as rivuletContext } from './rivulet';
 
 export interface Context {
   [x: string]: string;
-  run_wrapper: string;
-  run: string;
+  include_headers: string;
 }
 
 interface IndexedContexts {
@@ -11,7 +11,8 @@ interface IndexedContexts {
 }
 
 const contexts = {
-  'arduino-uno': unoContext
+  'arduino-uno': unoContext,
+  rivulet: rivuletContext
 };
 
 export const getContext = (key: string) => contexts[key];
