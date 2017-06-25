@@ -8,7 +8,7 @@
   "scripts": {
     "start": "tsc src/index.ts",
     "build": "tsc src/index.ts",
-    "test": "npm run build && node src/index.js ../AmnisIO/arduino-uno/tests/blink.ts"
+    "test": "npm run build && node src/index.js ../AmnisIO/examples/arduino-uno/blink.ts"
   },
   "devDependencies": {
     "@types/node": "^7.0.29",
