@@ -2,13 +2,13 @@
   "name": "@amnisio/typewriter",
   "version": "0.0.7",
   "description": "The transpiler used to convert TypeScript to C for AmnisIO",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
   "author": "Sudarsan Balaji<Sudarsan.Balaji@outlook.com>",
   "license": "MIT",
   "scripts": {
-    "start": "tsc src/index.ts",
-    "build": "tsc src/index.ts",
-    "test": "npm run build && node src/index.js ../AmnisIO/examples/arduino-uno/blink.ts"
+    "start": "tsc",
+    "build": "tsc"
   },
   "devDependencies": {
     "@types/node": "^7.0.29",
