@@ -49,10 +49,23 @@ const createCompilerHost = (options: CompilerOptions, moduleSearchLocations: str
   }
 }
 
+const defaultCompilerOptions: CompilerOptions = {
+  module: ModuleKind.CommonJS,
+  target: ScriptTarget.ES5,
+  noLib: true,
+  allowJs: false,
+  noImplicitAny: true,
+  noImplicitReturns: true,
+  noFallthroughCasesInSwitch: true,
+  noResolve: true,
+  noUnusedLocals: true,
+  noUnusedParameters: true
+};
+
 export const getAST = (sourceFiles: string[]): SourceFile => {
-  if (sourceFiles.length > 1) throw new Error('reactive-iot-compiler currently supports only one source file per project');
-  const options: CompilerOptions = { module: ModuleKind.AMD, target: ScriptTarget.ES5, noLib: true, allowJs: true };
+  if (sourceFiles.length > 1) throw new Error('AmnisIO currently supports only one source file per project');
+  const options = defaultCompilerOptions;
   const host = createCompilerHost(options, []);
   const program = createProgram(sourceFiles, options, host);
-  return program.getSourceFiles().filter(file => file.fileName === sourceFiles[0]).shift();
+  return program.getSourceFiles().shift();
 }
