@@ -9,4 +9,6 @@ export const emitIdentifier = ({ text }: Identifier, context: Context): EmitResu
 
 export const emitType = ({ typeName }: TypeReferenceNode, context: Context): EmitResult => emit(typeName, context);
 
-const sanitize = (value: string): string => value.replace(/\$/g, '');
+const sanitize = (value: string): string => value;
+  // TODO: Check if sanitization required
+  // .replace(/\$/g, '');
