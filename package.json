@@ -1,6 +1,6 @@
 {
   "name": "@amnisio/typewriter",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "The transpiler used to convert TypeScript to C for AmnisIO",
   "main": "index.js",
   "author": "Sudarsan Balaji<Sudarsan.Balaji@outlook.com>",
