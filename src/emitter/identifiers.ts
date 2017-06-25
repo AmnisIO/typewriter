@@ -11,4 +11,4 @@ export const emitType = ({ typeName }: TypeReferenceNode, context: Context): Emi
 
 const sanitize = (value: string): string =>
   value
-    .replace(/\$/g, '');
+    .replace(/\$/g, '__stream');
