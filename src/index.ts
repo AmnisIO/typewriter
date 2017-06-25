@@ -3,6 +3,7 @@ import { emit } from './emitter';
 
 declare function require(name: string);
 declare var process: any;
+const util = require('util');
 
 (function () {
   if (typeof process !== 'undefined' && process.nextTick && !process.browser && typeof require !== "undefined") {
@@ -12,7 +13,7 @@ declare var process: any;
     var fileNames = process.argv.slice(2);
     const sourceFile = getAST(fileNames);
     const result = emit(sourceFile, { include_headers: '' });
-    console.log(result.emitted_string);
+    process.stdout.write(util.format.apply(null, [result.emitted_string]) + '\n');
     process.exit();
   }
 })();
