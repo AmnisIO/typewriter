@@ -3,12 +3,11 @@ import { Context } from '../contexts';
 import { EmitResult, emit, emitString } from './';
 
 export const emitCallExpression = ({ expression, ...node }: CallExpression, context: Context) => {
-  let self_reference_emit = '';
-  if (expression.kind === SyntaxKind.PropertyAccessExpression) {
-    const self_reference = (expression as PropertyAccessExpression).expression;
-    self_reference_emit = emitString(self_reference, context) + ', ';
-  }
-  const emitted_string = `${emitString(expression, context)}(${self_reference_emit}${node.arguments.map(arg => emitString(arg, context)).join(', ')})`;
+  const args =
+    expression.kind === SyntaxKind.PropertyAccessExpression
+      ? [(<PropertyAccessExpression>expression).expression, ...node.arguments]
+      : node.arguments;
+  const emitted_string = `${emitString(expression, context)}(${args.map(arg => emitString(arg, context)).join(', ')})`;
   return {
     context,
     emitted_string
