@@ -1,5 +1,5 @@
 {
-  "name": "reactive-iot-transpiler",
+  "name": "@amnisio/typewriter",
   "version": "0.0.1",
   "description": "The RIoT transpiler which compiles TypeScript into the required C code",
   "main": "index.js",
