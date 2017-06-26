@@ -5,7 +5,7 @@
 
 Byte toggle(Byte value) {
   return value == HIGH ? LOW : HIGH;
-};
+}
 
 Sinks* blink(Sources* arduino) {
   Sinks* sinks = sinks_create();
@@ -13,7 +13,7 @@ Sinks* blink(Sources* arduino) {
   ByteStream* sampledLED = sample->sample(sample, arduino->LED);
   sinks->LED = sampledLED->map(sampledLED, toggle);
   return sinks;
-};
+}
 
 void setup() {
   gyrus_run(blink);
