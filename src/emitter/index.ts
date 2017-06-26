@@ -1,4 +1,4 @@
-import { Node, SyntaxKind, SourceFile, TypeReferenceNode, Identifier, Block, ExpressionStatement, BinaryExpression, PropertyAccessExpression, LiteralLikeNode } from 'typescript';
+import { Node, SyntaxKind, SourceFile, TypeReferenceNode, Identifier, Block, ExpressionStatement, BinaryExpression, PropertyAccessExpression, LiteralLikeNode, FunctionLikeDeclaration } from 'typescript';
 import { emitImportDeclaration } from './imports';
 import { emitFunctionLikeDeclaration, emitVariableDeclaration } from './declarations';
 import { emitCallExpression, emitConditionalExpression, emitBinaryExpression, emitPropertyAccessExpression } from './expressions';
@@ -55,7 +55,8 @@ export const emit = (node: Node, context: Context): EmitResult => {
     case SyntaxKind.ImportDeclaration:
       return emitImportDeclaration(<any>node, context);
     case SyntaxKind.FunctionDeclaration:
-      return emitFunctionLikeDeclaration(<any>node, context);
+    case SyntaxKind.ArrowFunction:
+      return emitFunctionLikeDeclaration(<FunctionLikeDeclaration>node, context);
     case SyntaxKind.VariableDeclaration:
       return emitVariableDeclaration(<any>node, context);
 
