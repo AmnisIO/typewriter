@@ -15,7 +15,8 @@
   "license": "MIT",
   "scripts": {
     "start": "tsc",
-    "build": "tsc"
+    "build": "tsc",
+    "test": "tsc && node bin/typewriter.js --file tests/blink.ts --outfile tests/blink.c"
   },
   "devDependencies": {
     "@types/node": "^7.0.29"
