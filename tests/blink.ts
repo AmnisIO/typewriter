@@ -1,4 +1,4 @@
-import { ByteStream, Byte, periodic } from 'rivulet';
+import { ByteStream, Byte, periodic } from '@amnisio/rivulet';
 import { Sources, Sinks, HIGH, LOW, run, createSinks } from '@amnisio/arduino-uno';
 
 const toggle = (value: Byte): Byte => value == HIGH ? LOW : HIGH;

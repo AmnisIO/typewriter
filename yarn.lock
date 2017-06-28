@@ -2,6 +2,16 @@
 # yarn lockfile v1
 
 
+"@amnisio/arduino-uno@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@amnisio/arduino-uno/-/arduino-uno-1.0.0.tgz#d3ac417e2ee514eee0a2a4e822cca312c0fc9c8a"
+  dependencies:
+    "@amnisio/rivulet" "^1.0.0"
+
+"@amnisio/rivulet@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@amnisio/rivulet/-/rivulet-1.0.0.tgz#498113f80d735789680c8df4d7853b4842e3dfef"
+
 "@types/node@^7.0.29":
   version "7.0.29"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-7.0.29.tgz#ccfcec5b7135c7caf6c4ffb8c7f33102340d99df"

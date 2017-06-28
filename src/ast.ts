@@ -1,4 +1,4 @@
-import { sys, createSourceFile, resolveModuleName, ModuleKind, createProgram, CompilerOptions, CompilerHost, SourceFile, ScriptTarget, ResolvedModule } from 'typescript';
+import { sys, createSourceFile, resolveModuleName, ModuleKind, createProgram, CompilerOptions, CompilerHost, SourceFile, ScriptTarget, ResolvedModule, TypeChecker } from 'typescript';
 import * as path from 'path';
 
 const createCompilerHost = (options: CompilerOptions, moduleSearchLocations: string[]): CompilerHost => {
@@ -62,10 +62,20 @@ const defaultCompilerOptions: CompilerOptions = {
   noUnusedParameters: true
 };
 
-export const getAST = (sourceFiles: string[]): SourceFile => {
+export interface ParseResult {
+  sourceFile: SourceFile;
+  typeChecker: TypeChecker;
+}
+
+export const parse = (sourceFiles: string[]): ParseResult => {
   if (sourceFiles.length > 1) throw new Error('AmnisIO currently supports only one source file per project');
   const options = defaultCompilerOptions;
   const host = createCompilerHost(options, []);
   const program = createProgram(sourceFiles, options, host);
-  return program.getSourceFiles().shift();
+  const sourceFile = program.getSourceFiles().shift();
+  const typeChecker = program.getTypeChecker();
+  return {
+    sourceFile,
+    typeChecker
+  };
 }
