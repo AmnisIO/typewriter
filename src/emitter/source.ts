@@ -2,7 +2,7 @@ import { EmitResult, emit } from './';
 import { Context } from '../contexts';
 import { SourceFile, TypeChecker } from 'typescript';
 
-export const emitSourceFile = (node: SourceFile, context: Context, typeChecker?: TypeChecker): EmitResult =>
+export const emitSourceFile = (node: SourceFile, context: Context, typeChecker: TypeChecker): EmitResult =>
   node.statements
     .reduce<EmitResult>(({ context, emitted_string, typeChecker }, node) => {
       const result = emit(node, context, typeChecker);

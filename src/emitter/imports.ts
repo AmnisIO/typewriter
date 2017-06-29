@@ -2,7 +2,7 @@ import { ImportDeclaration, NamedImports, StringLiteral, TypeChecker } from 'typ
 import { Context, getContext } from '../contexts';
 import { EmitResult } from './';
 
-export const emitImportDeclaration = (node: ImportDeclaration, context: Context, typeChecker?: TypeChecker): EmitResult => {
+export const emitImportDeclaration = (node: ImportDeclaration, context: Context, typeChecker: TypeChecker): EmitResult => {
   const module_specifier = (node.moduleSpecifier as StringLiteral).text.split('/').pop();
   const module_context = getContext(module_specifier);
   const emitted_string =

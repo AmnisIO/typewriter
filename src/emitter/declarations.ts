@@ -2,7 +2,7 @@ import { FunctionLikeDeclaration, Identifier, TypeReferenceNode, VariableDeclara
 import { Context } from '../contexts';
 import { EmitResult, emit, emitString } from './';
 
-const emitFunctionDeclaration = (node: FunctionLikeDeclaration, context: Context, typeChecker?: TypeChecker): string => {
+const emitFunctionDeclaration = (node: FunctionLikeDeclaration, context: Context, typeChecker: TypeChecker): string => {
   const return_type = emitString(node.type, context, typeChecker);
   const function_name = emitString(node.name, context, typeChecker);
   // TODO: Move to parameter node emit
@@ -19,15 +19,15 @@ const emitFunctionDeclaration = (node: FunctionLikeDeclaration, context: Context
   return declaration;
 };
 
-export const emitFunctionLikeDeclaration = (node: FunctionLikeDeclaration, context: Context, typeChecker?: TypeChecker): EmitResult => {
+export const emitFunctionLikeDeclaration = (node: FunctionLikeDeclaration, context: Context, typeChecker: TypeChecker): EmitResult => {
   return {
     context,
-    emitted_string: emitFunctionDeclaration(node, context),
+    emitted_string: emitFunctionDeclaration(node, context, typeChecker),
     typeChecker
   };
 }
 
-export const emitVariableDeclaration = (node: VariableDeclaration, context: Context, typeChecker?: TypeChecker): EmitResult => {
+export const emitVariableDeclaration = (node: VariableDeclaration, context: Context, typeChecker: TypeChecker): EmitResult => {
   const type = node.type || createTypeReferenceNode(typeChecker.typeToString(typeChecker.getTypeAtLocation(node)), []);
   const emitted_string =
     node.initializer.kind === SyntaxKind.ArrowFunction
