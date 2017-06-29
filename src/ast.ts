@@ -57,7 +57,6 @@ const defaultCompilerOptions: CompilerOptions = {
   noImplicitAny: true,
   noImplicitReturns: true,
   noFallthroughCasesInSwitch: true,
-  noResolve: true,
   noUnusedLocals: true,
   noUnusedParameters: true
 };
@@ -72,7 +71,8 @@ export const parse = (sourceFiles: string[]): ParseResult => {
   const options = defaultCompilerOptions;
   const host = createCompilerHost(options, []);
   const program = createProgram(sourceFiles, options, host);
-  const sourceFile = program.getSourceFiles().shift();
+  const sourceFilesOfProgram = program.getSourceFiles();
+  const sourceFile = sourceFilesOfProgram[sourceFilesOfProgram.length - 1];
   const typeChecker = program.getTypeChecker();
   return {
     sourceFile,
