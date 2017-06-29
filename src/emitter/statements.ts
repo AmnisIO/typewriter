@@ -17,13 +17,15 @@ export const emitVariableStatement = ({ declarationList: { declarations } }: Var
     : declarations.map(node => emitString(node, context, typeChecker)).join(';\n') + ';';
   return {
     context,
-    emitted_string
+    emitted_string,
+    typeChecker
   };
 };
 
 export const emitExpressionStatement = ({ expression }: ExpressionStatement, context: Context, typeChecker?: TypeChecker): EmitResult => ({
   context,
-  emitted_string: wrapRunCall(`${emitString(expression, context, typeChecker)};`, context)
+  emitted_string: wrapRunCall(`${emitString(expression, context, typeChecker)};`, context),
+  typeChecker
 });
 
 const wrapRunCall = (result: string, { run, run_wrapper }: Context): string =>

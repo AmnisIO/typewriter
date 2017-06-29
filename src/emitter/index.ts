@@ -12,7 +12,7 @@ import { Context } from '../contexts';
 export interface EmitResult {
   context: Context;
   emitted_string: string;
-  typeChecker?: TypeChecker;
+  typeChecker: TypeChecker;
 }
 
 const ignore = (node: Node, context: Context, typeChecker: TypeChecker): EmitResult => ({
@@ -21,9 +21,9 @@ const ignore = (node: Node, context: Context, typeChecker: TypeChecker): EmitRes
   typeChecker
 })
 
-export const emitString = (node: Node, context: Context, typeChecker?: TypeChecker): string => emit(node, context).emitted_string;
+export const emitString = (node: Node, context: Context, typeChecker: TypeChecker): string => emit(node, context, typeChecker).emitted_string;
 
-export const emit = (node: Node, context: Context, typeChecker?: TypeChecker): EmitResult => {
+export const emit = (node: Node, context: Context, typeChecker: TypeChecker): EmitResult => {
   switch (node.kind) {
     // Source
     case SyntaxKind.SourceFile:

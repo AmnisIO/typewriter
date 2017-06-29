@@ -17,6 +17,7 @@ export const emitImportDeclaration = (node: ImportDeclaration, context: Context,
       ...context,
       ...module_context
     },
-    emitted_string
+    emitted_string,
+    typeChecker
   };
 }

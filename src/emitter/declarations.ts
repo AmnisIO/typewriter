@@ -1,4 +1,4 @@
-import { FunctionLikeDeclaration, Identifier, TypeReferenceNode, VariableDeclaration, SyntaxKind, ArrowFunction, Block, Expression, createBlock, createStatement, createReturn, TypeChecker } from 'typescript';
+import { FunctionLikeDeclaration, Identifier, TypeReferenceNode, VariableDeclaration, SyntaxKind, ArrowFunction, Block, Expression, createBlock, createStatement, createReturn, TypeChecker, createTypeReferenceNode } from 'typescript';
 import { Context } from '../contexts';
 import { EmitResult, emit, emitString } from './';
 
@@ -28,10 +28,11 @@ export const emitFunctionLikeDeclaration = (node: FunctionLikeDeclaration, conte
 }
 
 export const emitVariableDeclaration = (node: VariableDeclaration, context: Context, typeChecker?: TypeChecker): EmitResult => {
+  const type = node.type || createTypeReferenceNode(typeChecker.typeToString(typeChecker.getTypeAtLocation(node)), []);
   const emitted_string =
     node.initializer.kind === SyntaxKind.ArrowFunction
       ? emitString({ ...node.initializer, name: node.name }, context, typeChecker)
-      : `${emitString(node.type, context, typeChecker)} ${emitString(node.name, context, typeChecker)} = ${emitString(node.initializer, context, typeChecker)}`;
+      : `${emitString(type, context, typeChecker)} ${emitString(node.name, context, typeChecker)} = ${emitString(node.initializer, context, typeChecker)}`;
   return {
     context,
     emitted_string,

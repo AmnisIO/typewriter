@@ -17,15 +17,18 @@ export const emitCallExpression = ({ expression, ...node }: CallExpression, cont
 
 export const emitConditionalExpression = ({ condition, questionToken, whenTrue, colonToken, whenFalse }: ConditionalExpression, context: Context, typeChecker?: TypeChecker): EmitResult => ({
   context,
-  emitted_string: `${emitString(condition, context, typeChecker)} ${emitString(questionToken, context, typeChecker)} ${emitString(whenTrue, context, typeChecker)} ${emitString(colonToken, context, typeChecker)} ${emitString(whenFalse, context, typeChecker)}`
+  emitted_string: `${emitString(condition, context, typeChecker)} ${emitString(questionToken, context, typeChecker)} ${emitString(whenTrue, context, typeChecker)} ${emitString(colonToken, context, typeChecker)} ${emitString(whenFalse, context, typeChecker)}`,
+  typeChecker
 });
 
 export const emitBinaryExpression = ({ left, right, operatorToken }: BinaryExpression, context: Context, typeChecker?: TypeChecker): EmitResult => ({
   context,
-  emitted_string: `${emitString(left, context, typeChecker)} ${emitString(operatorToken, context, typeChecker)} ${emitString(right, context, typeChecker)}`
+  emitted_string: `${emitString(left, context, typeChecker)} ${emitString(operatorToken, context, typeChecker)} ${emitString(right, context, typeChecker)}`,
+  typeChecker
 });
 
 export const emitPropertyAccessExpression = ({ name, expression }: PropertyAccessExpression, context: Context, typeChecker?: TypeChecker): EmitResult => ({
   context,
-  emitted_string: `${emitString(expression, context, typeChecker)}->${emitString(name, context, typeChecker)}`
+  emitted_string: `${emitString(expression, context, typeChecker)}->${emitString(name, context, typeChecker)}`,
+  typeChecker
 });
