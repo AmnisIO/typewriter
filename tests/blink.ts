@@ -1,12 +1,12 @@
-import { ByteStream, Byte, periodic } from 'rivulet';
+import { ByteStream, Byte, periodic } from '@amnisio/rivulet';
 import { Sources, Sinks, HIGH, LOW, run, createSinks } from '@amnisio/arduino-uno';
 
-const toggle = (value: Byte): Byte => value == HIGH ? LOW : HIGH;
+const toggle = (value: Byte) => value == HIGH ? LOW : HIGH;
 
-const blink = (arduino: Sources): Sinks => {
-  const sinks: Sinks = createSinks();
-  const sample$: ByteStream = periodic(1000);
-  const sampledLED$: ByteStream = sample$.sample(arduino.LED$);
+const blink = (arduino: Sources) => {
+  const sinks = createSinks();
+  const sample$ = periodic(1000);
+  const sampledLED$ = sample$.sample(arduino.LED$);
   sinks.LED$ = sampledLED$.map(toggle);
   return sinks;
 }

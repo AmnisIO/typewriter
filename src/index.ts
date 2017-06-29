@@ -1,4 +1,4 @@
-import { getAST } from './ast';
+import { parse } from './ast';
 import { emitString } from './emitter';
 import * as fs from 'fs';
 
@@ -11,5 +11,7 @@ export const typewrite = (file: string, outputFilePath: string): void => {
   fs.writeFileSync(outputFilePath, result);
 };
 
-export const getTypeWrittenString = (file: string): string =>
-  emitString(getAST([file]), { include_headers: '' });
+export const getTypeWrittenString = (file: string): string => {
+  const { sourceFile, typeChecker } = parse([file]);
+  return emitString(sourceFile, { include_headers: '' }, typeChecker);
+};

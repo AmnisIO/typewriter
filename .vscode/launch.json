@@ -14,9 +14,10 @@
             },
             "runtimeArgs": [
                 "run-script",
-                "test"
+                "debug"
             ],
-            "port": 5858
+            "protocol": "inspector",
+            "port": 9229
         },
         {
             "type": "node",
