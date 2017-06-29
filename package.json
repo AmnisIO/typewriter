@@ -16,7 +16,8 @@
   "scripts": {
     "start": "tsc",
     "build": "tsc",
-    "test": "tsc && node bin/typewriter.js --file tests/blink.ts --outfile tests/blink.c"
+    "test": "tsc && node bin/typewriter.js --file tests/blink.ts --outfile tests/blink.c",
+    "debug": "tsc && node --nolazy --inspect-brk=9229 bin/typewriter.js --file tests/blink.ts --outfile tests/blink.c"
   },
   "devDependencies": {
     "@amnisio/arduino-uno": "^1.0.0",
