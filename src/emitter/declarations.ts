@@ -3,7 +3,8 @@ import { Context } from '../contexts';
 import { EmitResult, emit, emitString } from './';
 
 const emitFunctionDeclaration = (node: FunctionLikeDeclaration, context: Context, typeChecker: TypeChecker): string => {
-  const return_type = emitString(node.type, context, typeChecker);
+  const type = node.type || createTypeReferenceNode(typeChecker.typeToString(typeChecker.getTypeAtLocation(node)).split('=>').pop().trim(), []);
+  const return_type = emitString(type, context, typeChecker);
   const function_name = emitString(node.name, context, typeChecker);
   // TODO: Move to parameter node emit
   const parameters =
