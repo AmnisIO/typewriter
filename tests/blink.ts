@@ -6,7 +6,7 @@ const toggle = (value: Byte): Byte => value == HIGH ? LOW : HIGH;
 const blink = (arduino: Sources): Sinks => {
   const sinks: Sinks = createSinks();
   const sample$ = periodic(1000);
-  const sampledLED$: ByteStream = sample$.sample(arduino.LED$);
+  const sampledLED$ = sample$.sample(arduino.LED$);
   sinks.LED$ = sampledLED$.map(toggle);
   return sinks;
 }
