@@ -29,7 +29,7 @@ export const emitFunctionLikeDeclaration = (node: FunctionLikeDeclaration, conte
 }
 
 export const emitVariableDeclaration = (node: VariableDeclaration, context: Context, typeChecker: TypeChecker): EmitResult => {
-  const type = node.type || createTypeReferenceNode(typeChecker.typeToString(typeChecker.getTypeAtLocation(node)), []);
+  const type = node.type;
   const emitted_string =
     node.initializer.kind === SyntaxKind.ArrowFunction
       ? emitString({ ...node.initializer, name: node.name }, context, typeChecker)
