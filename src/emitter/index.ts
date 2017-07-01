@@ -1,4 +1,4 @@
-import { Node, SyntaxKind, SourceFile, TypeReferenceNode, Identifier, Block, ExpressionStatement, BinaryExpression, PropertyAccessExpression, LiteralLikeNode, FunctionLikeDeclaration, TypeChecker, ReturnStatement, VariableStatement, ImportDeclaration, VariableDeclaration, CallExpression, ConditionalExpression, QuestionToken, ColonToken, Token } from 'typescript';
+import { Node, SyntaxKind, SourceFile, TypeReferenceNode, Identifier, Block, ExpressionStatement, BinaryExpression, PropertyAccessExpression, LiteralLikeNode, FunctionLikeDeclaration, ReturnStatement, VariableStatement, ImportDeclaration, VariableDeclaration, CallExpression, ConditionalExpression, QuestionToken, ColonToken, Token } from 'typescript';
 import { emitImportDeclaration } from './imports';
 import { emitFunctionLikeDeclaration, emitVariableDeclaration } from './declarations';
 import { emitCallExpression, emitConditionalExpression, emitBinaryExpression, emitPropertyAccessExpression } from './expressions';
@@ -12,26 +12,24 @@ import { Context } from '../contexts';
 export interface EmitResult {
   context: Context;
   emitted_string: string;
-  typeChecker: TypeChecker;
 }
 
-const ignore = (node: Node, context: Context, typeChecker: TypeChecker): EmitResult => ({
+const ignore = (node: Node, context: Context): EmitResult => ({
   context,
-  emitted_string: `ignored_${SyntaxKind[node.kind]}`,
-  typeChecker
+  emitted_string: `ignored_${SyntaxKind[node.kind]}`
 })
 
-export const emitString = (node: Node, context: Context, typeChecker: TypeChecker): string => emit(node, context, typeChecker).emitted_string;
+export const emitString = (node: Node, context: Context): string => emit(node, context).emitted_string;
 
-export const emit = (node: Node, context: Context, typeChecker: TypeChecker): EmitResult => {
+export const emit = (node: Node, context: Context): EmitResult => {
   switch (node.kind) {
     // Source
     case SyntaxKind.SourceFile:
-      return emitSourceFile(<SourceFile>node, context, typeChecker);
+      return emitSourceFile(<SourceFile>node, context);
 
     // Identifiers
     case SyntaxKind.Identifier:
-      return emitIdentifier(<Identifier>node, context, typeChecker);
+      return emitIdentifier(<Identifier>node, context);
 
     // Names
 
@@ -41,36 +39,36 @@ export const emit = (node: Node, context: Context, typeChecker: TypeChecker): Em
 
     // Types
     case SyntaxKind.TypeReference:
-      return emitType(<TypeReferenceNode>node, context, typeChecker);
+      return emitType(<TypeReferenceNode>node, context);
 
     // Statements
     case SyntaxKind.Block:
-      return emitBlock(<Block>node, context, typeChecker);
+      return emitBlock(<Block>node, context);
     case SyntaxKind.ExpressionStatement:
-      return emitExpressionStatement(<ExpressionStatement>node, context, typeChecker);
+      return emitExpressionStatement(<ExpressionStatement>node, context);
     case SyntaxKind.ReturnStatement:
-      return emitReturnStatement(<ReturnStatement>node, context, typeChecker);
+      return emitReturnStatement(<ReturnStatement>node, context);
     case SyntaxKind.VariableStatement:
-      return emitVariableStatement(<VariableStatement>node, context, typeChecker);
+      return emitVariableStatement(<VariableStatement>node, context);
 
     // Declarations
     case SyntaxKind.ImportDeclaration:
-      return emitImportDeclaration(<ImportDeclaration>node, context, typeChecker);
+      return emitImportDeclaration(<ImportDeclaration>node, context);
     case SyntaxKind.FunctionDeclaration:
     case SyntaxKind.ArrowFunction:
-      return emitFunctionLikeDeclaration(<FunctionLikeDeclaration>node, context, typeChecker);
+      return emitFunctionLikeDeclaration(<FunctionLikeDeclaration>node, context);
     case SyntaxKind.VariableDeclaration:
-      return emitVariableDeclaration(<VariableDeclaration>node, context, typeChecker);
+      return emitVariableDeclaration(<VariableDeclaration>node, context);
 
     // Expressions
     case SyntaxKind.CallExpression:
-      return emitCallExpression(<CallExpression>node, context, typeChecker);
+      return emitCallExpression(<CallExpression>node, context);
     case SyntaxKind.ConditionalExpression:
-      return emitConditionalExpression(<ConditionalExpression>node, context, typeChecker);
+      return emitConditionalExpression(<ConditionalExpression>node, context);
     case SyntaxKind.BinaryExpression:
-      return emitBinaryExpression(<BinaryExpression>node, context, typeChecker);
+      return emitBinaryExpression(<BinaryExpression>node, context);
     case SyntaxKind.PropertyAccessExpression:
-      return emitPropertyAccessExpression(<PropertyAccessExpression>node, context, typeChecker);
+      return emitPropertyAccessExpression(<PropertyAccessExpression>node, context);
 
     // Clauses
 
@@ -79,20 +77,20 @@ export const emit = (node: Node, context: Context, typeChecker: TypeChecker): Em
     // Tokens
     case SyntaxKind.EqualsEqualsEqualsToken:
     case SyntaxKind.EqualsEqualsToken:
-      return emitEqualsEqualsToken(node, context, typeChecker);
+      return emitEqualsEqualsToken(node, context);
     case SyntaxKind.QuestionToken:
-      return emitQuestionToken(<QuestionToken>node, context, typeChecker);
+      return emitQuestionToken(<QuestionToken>node, context);
     case SyntaxKind.ColonToken:
-      return emitColonToken(<ColonToken>node, context, typeChecker);
+      return emitColonToken(<ColonToken>node, context);
     case SyntaxKind.FirstAssignment:
-      return emitFirstAssignmentToken(node, context, typeChecker);
+      return emitFirstAssignmentToken(node, context);
     case SyntaxKind.FirstLiteralToken:
-      return emitFirstLiteralToken(<LiteralLikeNode>node, context, typeChecker);
+      return emitFirstLiteralToken(<LiteralLikeNode>node, context);
     case SyntaxKind.EndOfFileToken:
-      return { context, emitted_string: '\n', typeChecker };
+      return { context, emitted_string: '\n' };
 
     // Ignore others
     default:
-      return ignore(node, context, typeChecker);
+      return ignore(node, context);
   }
 };

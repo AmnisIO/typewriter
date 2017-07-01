@@ -18,5 +18,5 @@ export const getTypeWrittenString = (file: string): string => {
     new TypeInjectorTransformer(typeChecker)
   ];
   const transformedSourceFile = transform(sourceFile, transformers);
-  return emitString(transformedSourceFile, { include_headers: '' }, typeChecker);
+  return emitString(transformedSourceFile, { include_headers: '' });
 };
