@@ -16,6 +16,10 @@
   version "7.0.29"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-7.0.29.tgz#ccfcec5b7135c7caf6c4ffb8c7f33102340d99df"
 
+"@types/ramda@^0.24.1":
+  version "0.24.1"
+  resolved "https://registry.yarnpkg.com/@types/ramda/-/ramda-0.24.1.tgz#473695821e3c013b1894fc2f8b06614ee62005a9"
+
 ansi-regex@^2.0.0:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/ansi-regex/-/ansi-regex-2.1.1.tgz#c3b33ab5ee360d86e0e628f0468ae7ef27d654df"

@@ -21,7 +21,8 @@
   },
   "devDependencies": {
     "@amnisio/arduino-uno": "^1.0.1",
-    "@types/node": "^7.0.29"
+    "@types/node": "^7.0.29",
+    "@types/ramda": "^0.24.1"
   },
   "dependencies": {
     "@amnisio/rivulet": "^1.1.0",
