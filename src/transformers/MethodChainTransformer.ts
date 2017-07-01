@@ -11,37 +11,29 @@ export class MethodChainTransformer implements Transformer {
     return context => node => {
       const breakDownMethodChainIfNeeded = (node: Node): Node => {
         node = visitEachChild(node, breakDownMethodChainIfNeeded, context);
-        switch (node.kind) {
-          case SyntaxKind.CallExpression:
-            {
-              const expression = node as CallExpression;
-              const propertyAccessExpression = expression.expression as PropertyAccessExpression;
-              if (propertyAccessExpression.kind !== SyntaxKind.PropertyAccessExpression) {
-                return node;
-              }
-              let statement = node.parent as Statement;
-              while (
-                statement.parent != undefined &&
-                statement.kind !== SyntaxKind.ExpressionStatement &&
-                statement.kind !== SyntaxKind.VariableStatement &&
-                statement.kind !== SyntaxKind.ReturnStatement) {
-                statement = statement.parent as Statement;
-              }
-              let block = statement.parent as Block;
-              while (block.parent != undefined && block.kind !== SyntaxKind.Block) block = block.parent as Block;
-              const index = block.statements.map((s, i) => ({ end: s.end, index: i })).filter(({ end, index }) => end < node.end).pop().index + 1;
-              const name = getRandomName();
-              const variableStatement = createVariableStatement(
-                [createToken(SyntaxKind.ConstKeyword)],
-                [createVariableDeclaration(name, undefined, propertyAccessExpression.expression)]
-              );
-              block.statements.splice(index, 0, variableStatement);
-              propertyAccessExpression.expression = createIdentifier(name);
-              return node;
-            }
-          default:
-            return node;
+        if (node.kind !== SyntaxKind.CallExpression) return node;
+        const expression = node as CallExpression;
+        const propertyAccessExpression = expression.expression as PropertyAccessExpression;
+        if (propertyAccessExpression.kind !== SyntaxKind.PropertyAccessExpression) return node;
+        let statement = node.parent as Statement;
+        while (
+          statement.parent != undefined &&
+          statement.kind !== SyntaxKind.ExpressionStatement &&
+          statement.kind !== SyntaxKind.VariableStatement &&
+          statement.kind !== SyntaxKind.ReturnStatement) {
+          statement = statement.parent as Statement;
         }
+        let block = statement.parent as Block;
+        while (block.parent != undefined && block.kind !== SyntaxKind.Block) block = block.parent as Block;
+        const index = block.statements.map((s, i) => ({ end: s.end, index: i })).filter(({ end, index }) => end < node.end).pop().index + 1;
+        const name = getRandomName();
+        const variableStatement = createVariableStatement(
+          [createToken(SyntaxKind.ConstKeyword)],
+          [createVariableDeclaration(name, undefined, propertyAccessExpression.expression)]
+        );
+        block.statements.splice(index, 0, variableStatement);
+        propertyAccessExpression.expression = createIdentifier(name);
+        return node;
       };
       return visitNode(node, breakDownMethodChainIfNeeded);
     }
