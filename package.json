@@ -1,6 +1,6 @@
 {
   "name": "@amnisio/typewriter",
-  "version": "0.0.19",
+  "version": "0.0.20",
   "description": "The transpiler used to convert TypeScript to C for AmnisIO",
   "files": [
     "dist",
