@@ -17,7 +17,7 @@ export class MethodChainTransformer implements Transformer {
               const expression = node as CallExpression;
               const propertyAccessExpression = expression.expression as PropertyAccessExpression;
               if (propertyAccessExpression.kind !== SyntaxKind.PropertyAccessExpression) {
-                return visitEachChild(node, breakDownMethodChainIfNeeded, context);
+                return node;
               }
               let statement = node.parent as Statement;
               while (
@@ -37,7 +37,7 @@ export class MethodChainTransformer implements Transformer {
               );
               block.statements.splice(index, 0, variableStatement);
               propertyAccessExpression.expression = createIdentifier(name);
-              return visitEachChild(node, breakDownMethodChainIfNeeded, context);
+              return node;
             }
           default:
             return node;
