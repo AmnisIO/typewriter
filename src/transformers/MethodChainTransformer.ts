@@ -1,5 +1,5 @@
-import { transform as transformInternal, TransformerFactory, SourceFile, TypeChecker, visitEachChild, visitNode, Node, SyntaxKind } from 'typescript';
-import { CallExpression, PropertyAccessExpression, Block, Statement, createVariableStatement, createToken, createVariableDeclaration, createIdentifier } from 'typescript';
+import { TransformerFactory, SourceFile, TypeChecker, visitEachChild, visitNode, Node, SyntaxKind, CallExpression, PropertyAccessExpression } from 'typescript';
+import { Block, Statement, createVariableStatement, createToken, createVariableDeclaration, createIdentifier, TypeNode, createTypeReferenceNode } from 'typescript';
 import { Transformer } from './types';
 import { path } from 'ramda';
 
@@ -22,7 +22,14 @@ const getParentBlock = (node: Node): Block => {
   return block;
 }
 export class MethodChainTransformer implements Transformer {
+  private _typeChecker: TypeChecker;
+  constructor(typeChecker: TypeChecker) {
+    this._typeChecker = typeChecker;
+  }
   getTransformer(): TransformerFactory<SourceFile> {
+    const typeChecker = this._typeChecker;
+    const getTypeAtLocation = typeChecker.getTypeAtLocation;
+    const toString = typeChecker.typeToString;
     return context => node => {
       const breakDownMethodChainIfNeeded = (node: Node): Node => {
         node = visitEachChild(node, breakDownMethodChainIfNeeded, context);
@@ -35,10 +42,17 @@ export class MethodChainTransformer implements Transformer {
         const block = getParentBlock(node);
         const index = block.statements.map((s, i) => ({ end: s.end, index: i })).filter(({ end, index }) => end < node.end).pop().index + 1;
         const name = getNextTemporaryVariableName();
+        let typeNode: TypeNode = undefined;
+        // try {
+        //   const type = getTypeAtLocation(node);
+        //   typeNode = typeChecker.typeToTypeNode(type);
+        // }
+        // catch (err) {
+        //   // Suppress
+        // }
         const variableStatement = createVariableStatement(
           [createToken(SyntaxKind.ConstKeyword)],
-          // TODO: Get the type of the variable here
-          [createVariableDeclaration(name, undefined, propertyAccessExpression.expression)]
+          [createVariableDeclaration(name, typeNode, propertyAccessExpression.expression)]
         );
         block.statements.splice(index, 0, variableStatement);
         propertyAccessExpression.expression = createIdentifier(name);

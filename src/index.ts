@@ -16,7 +16,7 @@ export const getTypeWrittenString = (file: string): string => {
   const { sourceFile, typeChecker } = parse([file]);
   const transformers = [
     new FunctionBlockTransformer(),
-    new MethodChainTransformer(),
+    new MethodChainTransformer(typeChecker),
     new TypeInjectorTransformer(typeChecker)
   ];
   const transformedSourceFile = transform(sourceFile, transformers);
