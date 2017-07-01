@@ -1,33 +1,28 @@
-import { QuestionToken, ColonToken, Token, SyntaxKind, Node, LiteralLikeNode, TypeChecker } from 'typescript';
+import { QuestionToken, ColonToken, Token, SyntaxKind, Node, LiteralLikeNode } from 'typescript';
 import { Context } from '../contexts';
 import { EmitResult, emit, emitString } from './';
 
-export const emitQuestionToken = (node: QuestionToken, context: Context, typeChecker: TypeChecker): EmitResult => ({
+export const emitQuestionToken = (node: QuestionToken, context: Context): EmitResult => ({
   context,
-  emitted_string: '?',
-  typeChecker
+  emitted_string: '?'
 });
 
-export const emitColonToken = (node: ColonToken, context: Context, typeChecker: TypeChecker): EmitResult => ({
+export const emitColonToken = (node: ColonToken, context: Context): EmitResult => ({
   context,
-  emitted_string: ':',
-  typeChecker
+  emitted_string: ':'
 });
 
-export const emitEqualsEqualsToken = (node: Node, context: Context, typeChecker: TypeChecker): EmitResult => ({
+export const emitEqualsEqualsToken = (node: Node, context: Context): EmitResult => ({
   context,
-  emitted_string: '==',
-  typeChecker
+  emitted_string: '=='
 });
 
-export const emitFirstAssignmentToken = (node: Node, context: Context, typeChecker: TypeChecker): EmitResult => ({
+export const emitFirstAssignmentToken = (node: Node, context: Context): EmitResult => ({
   context,
-  emitted_string: '=',
-  typeChecker
+  emitted_string: '='
 });
 
-export const emitFirstLiteralToken = ({ text }: LiteralLikeNode, context: Context, typeChecker: TypeChecker): EmitResult => ({
+export const emitFirstLiteralToken = ({ text }: LiteralLikeNode, context: Context): EmitResult => ({
   context,
-  emitted_string: text,
-  typeChecker
+  emitted_string: text
 });
