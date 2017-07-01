@@ -1,6 +1,6 @@
 import { parse } from './ast';
 import { emitString } from './emitter';
-import { transform, TypeInjectorTransformer, FunctionBlockTransformer } from './transformers';
+import { transform, TypeInjectorTransformer, FunctionBlockTransformer, MethodChainTransformer } from './transformers';
 import * as fs from 'fs';
 
 declare function require(name: string): any;
@@ -16,6 +16,7 @@ export const getTypeWrittenString = (file: string): string => {
   const { sourceFile, typeChecker } = parse([file]);
   const transformers = [
     new FunctionBlockTransformer(),
+    new MethodChainTransformer(),
     new TypeInjectorTransformer(typeChecker)
   ];
   const transformedSourceFile = transform(sourceFile, transformers);
