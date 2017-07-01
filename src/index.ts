@@ -1,6 +1,6 @@
 import { parse } from './ast';
 import { emitString } from './emitter';
-import { transform, DummyTransformer } from './transformers';
+import { transform, DummyTransformer, TypeInjectorTransformer } from './transformers';
 import * as fs from 'fs';
 
 declare function require(name: string): any;
@@ -15,7 +15,8 @@ export const typewrite = (file: string, outputFilePath: string): void => {
 export const getTypeWrittenString = (file: string): string => {
   const { sourceFile, typeChecker } = parse([file]);
   const transformers = [
-    new DummyTransformer()
+    new DummyTransformer(),
+    new TypeInjectorTransformer(typeChecker)
   ];
   const transformedSourceFile = transform(sourceFile, transformers);
   return emitString(transformedSourceFile, { include_headers: '' }, typeChecker);
