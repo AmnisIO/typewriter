@@ -1,5 +1,6 @@
 import { TransformerFactory, SourceFile, TypeChecker, visitEachChild, visitNode, Node, SyntaxKind, CallExpression, PropertyAccessExpression } from 'typescript';
 import { Block, Statement, createVariableStatement, createToken, createVariableDeclaration, createIdentifier, TypeNode, createTypeReferenceNode } from 'typescript';
+import { createVariableDeclarationList } from 'typescript';
 import { Transformer } from './types';
 import { path } from 'ramda';
 
@@ -50,12 +51,15 @@ export class MethodChainTransformer implements Transformer {
         // catch (err) {
         //   // Suppress
         // }
-        const variableStatement = createVariableStatement(
-          [createToken(SyntaxKind.ConstKeyword)],
-          [createVariableDeclaration(name, typeNode, propertyAccessExpression.expression)]
-        );
+        // TODO: Fetch type of node as above instead of assuming 'ByteStream'
+        typeNode = createTypeReferenceNode('ByteStream', []);
+        const variableDeclaration = createVariableDeclaration(name, typeNode, propertyAccessExpression.expression);
+        const variableDeclarationList = createVariableDeclarationList([variableDeclaration]);
+        const variableStatement = createVariableStatement(undefined, variableDeclarationList);
         block.statements.splice(index, 0, variableStatement);
-        propertyAccessExpression.expression = createIdentifier(name);
+        const identifierToVariable = createIdentifier(name);
+        (<any>identifierToVariable).original = propertyAccessExpression.expression;
+        propertyAccessExpression.expression = identifierToVariable;
         return node;
       };
       return visitNode(node, breakDownMethodChainIfNeeded);
