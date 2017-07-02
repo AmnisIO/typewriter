@@ -1,4 +1,17 @@
-import { transform as transformInternal, TransformerFactory, SourceFile, TypeChecker, visitEachChild, visitNode, Node, SyntaxKind, VariableDeclaration, FunctionLikeDeclaration, createTypeReferenceNode } from 'typescript';
+import {
+  TransformerFactory,
+  SourceFile,
+  TypeChecker,
+  visitEachChild,
+  visitNode,
+  Node,
+  SyntaxKind,
+  VariableDeclaration,
+  FunctionLikeDeclaration,
+  createTypeReferenceNode,
+  createFunctionTypeNode,
+  createNodeArray
+} from 'typescript';
 import { Transformer } from './types';
 import { path } from 'ramda';
 
@@ -30,8 +43,19 @@ export class TypeInjectorTransformer implements Transformer {
               if (declaration.type != undefined) return;
               const type = getTypeAtLocation(node);
               const typeString = toString(type);
-              const processedTypeString = typeString.substring(typeString.indexOf("=>") + 2).trim();
-              declaration.type = createTypeReferenceNode(processedTypeString, []);
+              const split = typeString.split('=>').map(s => s.trim());
+              const returnType = createTypeReferenceNode(split[1], []);
+              const parametersList = declaration.parameters.map(parameter => {
+                if (parameter.type !== undefined) return parameter;
+                const type = getTypeAtLocation(parameter);
+                const typeString = toString(type);
+                const typeNode = createTypeReferenceNode(typeString, []);
+                parameter.type = typeNode;
+                return parameter;
+              });
+              const parameters = createNodeArray(parametersList);
+              const functionType = createFunctionTypeNode([], parameters, returnType);
+              declaration.type = functionType;
               return visitEachChild(node, injectTypeIfNeeded, context);
             }
           default:
