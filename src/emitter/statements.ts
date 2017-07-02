@@ -17,8 +17,8 @@ export const emitVariableStatement = (node: VariableStatement, context: Context)
     : (<any>node).original.declarationList.declarations as VariableDeclaration[];
   const emitted_string =
     declarations.length === 1 && declarations[0].initializer.kind === SyntaxKind.ArrowFunction
-    ? emitString(declarations[0], context)
-    : declarations.map(node => emitString(node, context)).join(';\n') + ';';
+      ? emitString(declarations[0], context)
+      : declarations.map(node => emitString(node, context)).join(';\n') + ';';
   return {
     context,
     emitted_string

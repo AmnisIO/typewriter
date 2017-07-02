@@ -5,7 +5,7 @@ import { Transformer } from './types';
 import { path } from 'ramda';
 
 let seed = 1;
-const getNextTemporaryVariableName = () => `_typewriter_${seed++}`;
+const getNextTemporaryVariableName = () => `_typewriter_intermediary_${seed++}`;
 const getParentStatement = (node: Node): Statement => {
   let statement = node.parent as Statement;
   while (
@@ -33,6 +33,8 @@ export class MethodChainTransformer implements Transformer {
     const toString = typeChecker.typeToString;
     return context => node => {
       const breakDownMethodChainIfNeeded = (node: Node): Node => {
+        // Ignore generated nodes
+        if (node.pos === -1) return node;
         node = visitEachChild(node, breakDownMethodChainIfNeeded, context);
         if (node.kind !== SyntaxKind.CallExpression) return node;
         const callExpression = <CallExpression>node;
