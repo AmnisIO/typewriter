@@ -5,7 +5,7 @@ import { Transformer } from './types';
 import { path } from 'ramda';
 
 let seed = 1;
-const getNextTemporaryVariableName = () => `__typewriter_${seed++}`;
+const getNextTemporaryVariableName = () => `_typewriter_${seed++}`;
 const getParentStatement = (node: Node): Statement => {
   let statement = node.parent as Statement;
   while (
@@ -44,15 +44,13 @@ export class MethodChainTransformer implements Transformer {
         const index = block.statements.map((s, i) => ({ end: s.end, index: i })).filter(({ end, index }) => end < node.end).pop().index + 1;
         const name = getNextTemporaryVariableName();
         let typeNode: TypeNode = undefined;
-        // try {
-        //   const type = getTypeAtLocation(node);
-        //   typeNode = typeChecker.typeToTypeNode(type);
-        // }
-        // catch (err) {
-        //   // Suppress
-        // }
-        // TODO: Fetch type of node as above instead of assuming 'ByteStream'
-        typeNode = createTypeReferenceNode('ByteStream', []);
+        try {
+          const type = getTypeAtLocation(node);
+          typeNode = createTypeReferenceNode(toString(type), []);
+        }
+        catch (err) {
+          typeNode = createTypeReferenceNode('Rivulet<Byte>', []);
+        }
         const variableDeclaration = createVariableDeclaration(name, typeNode, propertyAccessExpression.expression);
         const variableDeclarationList = createVariableDeclarationList([variableDeclaration]);
         const variableStatement = createVariableStatement(undefined, variableDeclarationList);
