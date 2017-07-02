@@ -1,4 +1,4 @@
-import { ReturnStatement, VariableStatement, ExpressionStatement, SyntaxKind } from 'typescript';
+import { ReturnStatement, VariableStatement, ExpressionStatement, SyntaxKind, VariableDeclaration } from 'typescript';
 import { Context } from '../contexts';
 import { EmitResult, emit, emitString } from './';
 
@@ -10,7 +10,11 @@ export const emitReturnStatement = ({ expression }: ReturnStatement, context: Co
   };
 };
 
-export const emitVariableStatement = ({ declarationList: { declarations } }: VariableStatement, context: Context): EmitResult => {
+export const emitVariableStatement = (node: VariableStatement, context: Context): EmitResult => {
+  const { declarationList } = node;
+  const declarations = (<any>node).original == undefined
+    ? declarationList.declarations
+    : (<any>node).original.declarationList.declarations as VariableDeclaration[];
   const emitted_string =
     declarations.length === 1 && declarations[0].initializer.kind === SyntaxKind.ArrowFunction
     ? emitString(declarations[0], context)

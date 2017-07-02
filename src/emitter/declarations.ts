@@ -1,4 +1,4 @@
-import { FunctionLikeDeclaration, Identifier, TypeReferenceNode, VariableDeclaration, SyntaxKind, ArrowFunction, Block, Expression, createBlock, createStatement, createReturn, createTypeReferenceNode } from 'typescript';
+import { FunctionLikeDeclaration, Identifier, TypeReferenceNode, VariableDeclaration, SyntaxKind, ArrowFunction, Block, Expression, createTypeReferenceNode } from 'typescript';
 import { Context } from '../contexts';
 import { EmitResult, emit, emitString } from './';
 
@@ -12,10 +12,7 @@ const emitFunctionDeclaration = (node: FunctionLikeDeclaration, context: Context
       .map(p => ({ name: emitString(p.name, context), type: emitString(p.type, context) }))
       .map(({ name, type }) => `${type} ${name}`)
       .join(', ');
-  const body =
-    node.body.kind === SyntaxKind.Block
-      ? emitString(node.body, context)
-      : emitString(createBlock([createReturn(node.body)]), context)
+  const body = emitString(node.body, context);
   const declaration = `${return_type} ${function_name}(${parameters}) ${body}`;
   return declaration;
 };
