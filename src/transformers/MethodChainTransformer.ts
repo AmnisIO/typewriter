@@ -33,6 +33,8 @@ export class MethodChainTransformer implements Transformer {
     const toString = typeChecker.typeToString;
     return context => node => {
       const breakDownMethodChainIfNeeded = (node: Node): Node => {
+        // Ignore generated nodes
+        if (node.pos === -1) return node;
         node = visitEachChild(node, breakDownMethodChainIfNeeded, context);
         if (node.kind !== SyntaxKind.CallExpression) return node;
         const callExpression = <CallExpression>node;
