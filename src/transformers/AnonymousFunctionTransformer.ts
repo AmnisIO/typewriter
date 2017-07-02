@@ -52,7 +52,7 @@ export class AnonymousFunctionTransformer implements Transformer {
           const { modifiers, typeParameters, equalsGreaterThanToken, body } = <ArrowFunction>argument;
           const type = getTypeAtLocation(argument);
           const typeString = toString(type);
-          const typeNode = createTypeReferenceNode(typeString, []);
+          const typeNode = createTypeReferenceNode(typeString.split('=>').pop().trim(), []);
           const name = getNextAnonymousFunctionName();
           const parametersList = (<ArrowFunction>argument).parameters.map(parameter => {
             if (parameter.type !== undefined) return parameter;
