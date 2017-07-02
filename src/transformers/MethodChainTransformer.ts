@@ -5,7 +5,7 @@ import { Transformer } from './types';
 import { path } from 'ramda';
 
 let seed = 1;
-const getNextTemporaryVariableName = () => `_typewriter_${seed++}`;
+const getNextTemporaryVariableName = () => `_typewriter_intermediary_${seed++}`;
 const getParentStatement = (node: Node): Statement => {
   let statement = node.parent as Statement;
   while (
