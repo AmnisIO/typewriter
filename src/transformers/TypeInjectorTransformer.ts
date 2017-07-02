@@ -26,6 +26,8 @@ export class TypeInjectorTransformer implements Transformer {
     const toString = typeChecker.typeToString;
     return context => node => {
       const injectTypeIfNeeded = (node: Node): Node => {
+        // Ignore genereated nodes
+        if (node.pos === -1) return node;
         switch (node.kind) {
           case SyntaxKind.VariableDeclaration:
             {
