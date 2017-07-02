@@ -9,8 +9,8 @@ Byte toggle(Byte value) {
 
 Sinks* blink(Sources* arduino) {
   Sinks* sinks = sinks_create();
-  any ___typewriter_1 = byte_stream_periodic(1000);
-  any ___typewriter_2 = ___typewriter_1->sample(___typewriter_1, arduino->LED);
+  ByteStream* ___typewriter_1 = byte_stream_periodic(1000);
+  ByteStream* ___typewriter_2 = ___typewriter_1->sample(___typewriter_1, arduino->LED);
   sinks->LED = ___typewriter_2->map(___typewriter_2, toggle);
   return sinks;
 }
