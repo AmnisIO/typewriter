@@ -1,6 +1,6 @@
 {
   "name": "@amnisio/typewriter",
-  "version": "0.0.25",
+  "version": "0.0.26",
   "description": "The transpiler used to convert TypeScript to C for AmnisIO",
   "files": [
     "dist",
@@ -20,12 +20,12 @@
     "debug": "tsc && node --nolazy --inspect-brk=9229 bin/typewriter.js --file tests/blink.ts --outfile tests/blink.c"
   },
   "devDependencies": {
-    "@amnisio/arduino-uno": "^1.0.1",
+    "@amnisio/arduino-uno": "^2.0.0",
+    "@amnisio/rivulet": "^2.0.1",
     "@types/node": "^7.0.29",
     "@types/ramda": "^0.24.1"
   },
   "dependencies": {
-    "@amnisio/rivulet": "^1.1.0",
     "change-case": "^3.0.1",
     "fs": "^0.0.1-security",
     "path": "^0.12.7",
