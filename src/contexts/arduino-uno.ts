@@ -4,5 +4,7 @@ export const context = {
   Sinks: 'Sinks*',
   createSinks: 'sinks_create',
   run: 'gyrus_run',
-  run_wrapper: 'void setup() {\n  :::\n}\n\nvoid loop() {\n\t\n}\n'
+  run_wrapper: 'void setup() {\n  :::\n}\n\nvoid loop() {\n\t\n}\n',
+  HIGH: 'GYRUS_HIGH',
+  LOW: 'GYRUS_LOW' 
 };
