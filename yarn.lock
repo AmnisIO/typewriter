@@ -2,9 +2,9 @@
 # yarn lockfile v1
 
 
-"@amnisio/arduino-uno@^2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@amnisio/arduino-uno/-/arduino-uno-2.0.0.tgz#077b239312687086b72d666c8e4325c243802378"
+"@amnisio/arduino-uno@^2.0.1":
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/@amnisio/arduino-uno/-/arduino-uno-2.0.1.tgz#ca6fdf19f03756d31cc13fe282b174de8f4c922c"
   dependencies:
     "@amnisio/rivulet" "^2.0.1"
 
