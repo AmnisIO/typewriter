@@ -2,24 +2,30 @@ import { QuestionToken, ColonToken, Token, SyntaxKind, Node, LiteralLikeNode } f
 import { Context } from '../contexts';
 import { EmitResult, emit, emitString } from './';
 
-export const emitQuestionToken = (node: QuestionToken, context: Context): EmitResult => ({
-  context,
-  emitted_string: '?'
-});
+const tokensLookup = {
+  [SyntaxKind.QuestionToken]: '?',
+  [SyntaxKind.EqualsEqualsEqualsToken]: '==',
+  [SyntaxKind.EqualsEqualsToken]: '==',
+  [SyntaxKind.ColonToken]: ':',
+  [SyntaxKind.FirstAssignment]: '=',
+  [SyntaxKind.PlusToken]: '+',
+  [SyntaxKind.PlusPlusToken]: '++',
+  [SyntaxKind.PlusEqualsToken]: '+=',
+  [SyntaxKind.MinusToken]: '-',
+  [SyntaxKind.MinusMinusToken]: '--',
+  [SyntaxKind.MinusEqualsToken]: '-=',
+  [SyntaxKind.AsteriskToken]: '*',
+  [SyntaxKind.AsteriskEqualsToken]: '*=',
+  [SyntaxKind.SlashToken]: '/',
+  [SyntaxKind.SlashEqualsToken]: '/=',
+  [SyntaxKind.PercentToken]: '%',
+  [SyntaxKind.PercentEqualsToken]: '%=',
+  [SyntaxKind.EndOfFileToken]: '\n'
+};
 
-export const emitColonToken = (node: ColonToken, context: Context): EmitResult => ({
+export const emitToken = <T extends SyntaxKind>(node: Token<T>, context: Context) => ({
   context,
-  emitted_string: ':'
-});
-
-export const emitEqualsEqualsToken = (node: Node, context: Context): EmitResult => ({
-  context,
-  emitted_string: '=='
-});
-
-export const emitFirstAssignmentToken = (node: Node, context: Context): EmitResult => ({
-  context,
-  emitted_string: '='
+  emitted_string: tokensLookup[node.kind as SyntaxKind]
 });
 
 export const emitFirstLiteralToken = ({ text }: LiteralLikeNode, context: Context): EmitResult => ({

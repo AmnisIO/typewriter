@@ -2,7 +2,7 @@ import { Node, SyntaxKind, SourceFile, TypeReferenceNode, Identifier, Block, Exp
 import { emitImportDeclaration } from './imports';
 import { emitFunctionLikeDeclaration, emitVariableDeclaration } from './declarations';
 import { emitCallExpression, emitConditionalExpression, emitBinaryExpression, emitPropertyAccessExpression } from './expressions';
-import { emitColonToken, emitQuestionToken, emitEqualsEqualsToken, emitFirstAssignmentToken, emitFirstLiteralToken } from './tokens';
+import { emitToken, emitFirstLiteralToken } from './tokens';
 import { emitIdentifier, emitType } from './identifiers';
 import { emitBlock } from './blocks';
 import { emitSourceFile } from './source';
@@ -77,17 +77,24 @@ export const emit = (node: Node, context: Context): EmitResult => {
     // Tokens
     case SyntaxKind.EqualsEqualsEqualsToken:
     case SyntaxKind.EqualsEqualsToken:
-      return emitEqualsEqualsToken(node, context);
     case SyntaxKind.QuestionToken:
-      return emitQuestionToken(<QuestionToken>node, context);
     case SyntaxKind.ColonToken:
-      return emitColonToken(<ColonToken>node, context);
     case SyntaxKind.FirstAssignment:
-      return emitFirstAssignmentToken(node, context);
+    case SyntaxKind.PlusToken:
+    case SyntaxKind.PlusPlusToken:
+    case SyntaxKind.PlusEqualsToken:
+    case SyntaxKind.MinusToken:
+    case SyntaxKind.MinusMinusToken:
+    case SyntaxKind.MinusEqualsToken:
+    case SyntaxKind.AsteriskToken:
+    case SyntaxKind.AsteriskEqualsToken:
+    case SyntaxKind.SlashToken:
+    case SyntaxKind.SlashEqualsToken:
+    case SyntaxKind.PercentToken:
+    case SyntaxKind.PercentEqualsToken:
+      return emitToken(node as Token<SyntaxKind>, context);
     case SyntaxKind.FirstLiteralToken:
       return emitFirstLiteralToken(<LiteralLikeNode>node, context);
-    case SyntaxKind.EndOfFileToken:
-      return { context, emitted_string: '\n' };
 
     // Ignore others
     default:
