@@ -1,7 +1,14 @@
-import { Node, SyntaxKind, SourceFile, TypeReferenceNode, Identifier, Block, ExpressionStatement, BinaryExpression, PropertyAccessExpression, LiteralLikeNode, FunctionLikeDeclaration, ReturnStatement, VariableStatement, ImportDeclaration, VariableDeclaration, CallExpression, ConditionalExpression, QuestionToken, ColonToken, Token, IfStatement } from 'typescript';
+import {
+  Node, SyntaxKind, SourceFile, TypeReferenceNode, Identifier, Block, ExpressionStatement, BinaryExpression, PropertyAccessExpression,
+  LiteralLikeNode, FunctionLikeDeclaration, ReturnStatement, VariableStatement, ImportDeclaration, VariableDeclaration, CallExpression,
+  ConditionalExpression, QuestionToken, ColonToken, Token, IfStatement, PrefixUnaryExpression, PostfixUnaryExpression
+} from 'typescript';
 import { emitImportDeclaration } from './imports';
 import { emitFunctionLikeDeclaration, emitVariableDeclaration } from './declarations';
-import { emitCallExpression, emitConditionalExpression, emitBinaryExpression, emitPropertyAccessExpression } from './expressions';
+import {
+  emitCallExpression, emitConditionalExpression, emitBinaryExpression, emitPropertyAccessExpression, emitPrefixUnaryExpression,
+  emitPostfixUnaryExpression
+} from './expressions';
 import { emitToken, emitFirstLiteralToken } from './tokens';
 import { emitIdentifier, emitType } from './identifiers';
 import { emitBlock } from './blocks';
@@ -71,6 +78,10 @@ export const emit = (node: Node, context: Context): EmitResult => {
       return emitBinaryExpression(<BinaryExpression>node, context);
     case SyntaxKind.PropertyAccessExpression:
       return emitPropertyAccessExpression(<PropertyAccessExpression>node, context);
+    case SyntaxKind.PrefixUnaryExpression:
+      return emitPrefixUnaryExpression(<PrefixUnaryExpression>node, context);
+    case SyntaxKind.PostfixUnaryExpression:
+      return emitPostfixUnaryExpression(<PostfixUnaryExpression>node, context);
 
     // Clauses
 
