@@ -4,7 +4,9 @@ import { EmitResult, emit } from './';
 
 const keywordsLookup = {
   [SyntaxKind.NumberKeyword]: 'number',
-  [SyntaxKind.BooleanKeyword]: 'boolean'
+  [SyntaxKind.BooleanKeyword]: 'boolean',
+  [SyntaxKind.TrueKeyword]: 'true',
+  [SyntaxKind.FalseKeyword]: 'false'
 };
 
 export const emitKeyword = ({ kind }: KeywordTypeNode, context: Context): EmitResult => {
