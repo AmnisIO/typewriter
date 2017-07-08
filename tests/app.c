@@ -8,7 +8,7 @@ int brightness = 0;
 int change = 5;
 
 int getFadeValue(ignored_NumberKeyword led) {
-  brightness = brightness ignored_PlusToken change;
+  brightness = brightness + change;
   ignored_IfStatement
   return brightness;
 }
