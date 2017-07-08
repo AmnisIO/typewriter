@@ -9,7 +9,7 @@ int change = 5;
 
 int getFadeValue(ignored_NumberKeyword led) {
   brightness = brightness + change;
-  ignored_IfStatement
+  if (brightness ignored_LessThanEqualsToken GYRUS_LOW ignored_BarBarToken brightness ignored_GreaterThanEqualsToken GYRUS_HIGH) change = ignored_PrefixUnaryExpression; 
   return brightness;
 }
 
