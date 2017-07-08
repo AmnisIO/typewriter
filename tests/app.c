@@ -9,7 +9,7 @@ int change = 5;
 
 int getBrightness(ignored_NumberKeyword led) {
   brightness = brightness + change;
-  if (brightness <= GYRUS_LOW ignored_BarBarToken brightness >= GYRUS_HIGH) change = -change; 
+  if (brightness <= GYRUS_LOW || brightness >= GYRUS_HIGH) change = -change; 
   return brightness;
 }
 
