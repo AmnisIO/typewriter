@@ -1,7 +1,7 @@
 import {
   Node, SyntaxKind, SourceFile, TypeReferenceNode, Identifier, Block, ExpressionStatement, BinaryExpression, PropertyAccessExpression,
   LiteralLikeNode, FunctionLikeDeclaration, ReturnStatement, VariableStatement, ImportDeclaration, VariableDeclaration, CallExpression,
-  ConditionalExpression, QuestionToken, ColonToken, Token, IfStatement, PrefixUnaryExpression, PostfixUnaryExpression
+  ConditionalExpression, QuestionToken, ColonToken, Token, IfStatement, PrefixUnaryExpression, PostfixUnaryExpression, KeywordTypeNode
 } from 'typescript';
 import { emitImportDeclaration } from './imports';
 import { emitFunctionLikeDeclaration, emitVariableDeclaration } from './declarations';
@@ -10,6 +10,7 @@ import {
   emitPostfixUnaryExpression
 } from './expressions';
 import { emitToken, emitFirstLiteralToken } from './tokens';
+import { emitKeyword } from './keywords';
 import { emitIdentifier, emitType } from './identifiers';
 import { emitBlock } from './blocks';
 import { emitSourceFile } from './source';
@@ -86,6 +87,13 @@ export const emit = (node: Node, context: Context): EmitResult => {
     // Clauses
 
     // Property Assignments
+
+    // Keywords
+    case SyntaxKind.NumberKeyword:
+    case SyntaxKind.BooleanKeyword:
+    case SyntaxKind.TrueKeyword:
+    case SyntaxKind.FalseKeyword:
+      return emitKeyword(<KeywordTypeNode>node, context);
 
     // Tokens
     case SyntaxKind.EqualsEqualsEqualsToken:
