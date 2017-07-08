@@ -1,12 +1,19 @@
-import { Node, SyntaxKind, SourceFile, TypeReferenceNode, Identifier, Block, ExpressionStatement, BinaryExpression, PropertyAccessExpression, LiteralLikeNode, FunctionLikeDeclaration, ReturnStatement, VariableStatement, ImportDeclaration, VariableDeclaration, CallExpression, ConditionalExpression, QuestionToken, ColonToken, Token } from 'typescript';
+import {
+  Node, SyntaxKind, SourceFile, TypeReferenceNode, Identifier, Block, ExpressionStatement, BinaryExpression, PropertyAccessExpression,
+  LiteralLikeNode, FunctionLikeDeclaration, ReturnStatement, VariableStatement, ImportDeclaration, VariableDeclaration, CallExpression,
+  ConditionalExpression, QuestionToken, ColonToken, Token, IfStatement, PrefixUnaryExpression, PostfixUnaryExpression
+} from 'typescript';
 import { emitImportDeclaration } from './imports';
 import { emitFunctionLikeDeclaration, emitVariableDeclaration } from './declarations';
-import { emitCallExpression, emitConditionalExpression, emitBinaryExpression, emitPropertyAccessExpression } from './expressions';
+import {
+  emitCallExpression, emitConditionalExpression, emitBinaryExpression, emitPropertyAccessExpression, emitPrefixUnaryExpression,
+  emitPostfixUnaryExpression
+} from './expressions';
 import { emitToken, emitFirstLiteralToken } from './tokens';
 import { emitIdentifier, emitType } from './identifiers';
 import { emitBlock } from './blocks';
 import { emitSourceFile } from './source';
-import { emitReturnStatement, emitVariableStatement, emitExpressionStatement } from './statements';
+import { emitReturnStatement, emitVariableStatement, emitExpressionStatement, emitIfStatement } from './statements';
 import { Context } from '../contexts';
 
 export interface EmitResult {
@@ -50,6 +57,8 @@ export const emit = (node: Node, context: Context): EmitResult => {
       return emitReturnStatement(<ReturnStatement>node, context);
     case SyntaxKind.VariableStatement:
       return emitVariableStatement(<VariableStatement>node, context);
+    case SyntaxKind.IfStatement:
+      return emitIfStatement(<IfStatement>node, context);
 
     // Declarations
     case SyntaxKind.ImportDeclaration:
@@ -69,6 +78,10 @@ export const emit = (node: Node, context: Context): EmitResult => {
       return emitBinaryExpression(<BinaryExpression>node, context);
     case SyntaxKind.PropertyAccessExpression:
       return emitPropertyAccessExpression(<PropertyAccessExpression>node, context);
+    case SyntaxKind.PrefixUnaryExpression:
+      return emitPrefixUnaryExpression(<PrefixUnaryExpression>node, context);
+    case SyntaxKind.PostfixUnaryExpression:
+      return emitPostfixUnaryExpression(<PostfixUnaryExpression>node, context);
 
     // Clauses
 
@@ -92,6 +105,16 @@ export const emit = (node: Node, context: Context): EmitResult => {
     case SyntaxKind.SlashEqualsToken:
     case SyntaxKind.PercentToken:
     case SyntaxKind.PercentEqualsToken:
+    case SyntaxKind.LessThanToken:
+    case SyntaxKind.LessThanEqualsToken:
+    case SyntaxKind.GreaterThanToken:
+    case SyntaxKind.GreaterThanEqualsToken:
+    case SyntaxKind.AmpersandToken:
+    case SyntaxKind.AmpersandAmpersandToken:
+    case SyntaxKind.AmpersandEqualsToken:
+    case SyntaxKind.BarToken:
+    case SyntaxKind.BarBarToken:
+    case SyntaxKind.BarEqualsToken:
       return emitToken(node as Token<SyntaxKind>, context);
     case SyntaxKind.FirstLiteralToken:
       return emitFirstLiteralToken(<LiteralLikeNode>node, context);

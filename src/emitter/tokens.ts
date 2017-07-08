@@ -20,7 +20,17 @@ const tokensLookup = {
   [SyntaxKind.SlashEqualsToken]: '/=',
   [SyntaxKind.PercentToken]: '%',
   [SyntaxKind.PercentEqualsToken]: '%=',
-  [SyntaxKind.EndOfFileToken]: '\n'
+  [SyntaxKind.LessThanToken]: '<',
+  [SyntaxKind.LessThanEqualsToken]: '<=',
+  [SyntaxKind.GreaterThanToken]: '>',
+  [SyntaxKind.GreaterThanEqualsToken]: '>=',
+  [SyntaxKind.AmpersandToken]: '&',
+  [SyntaxKind.AmpersandAmpersandToken]: '&&',
+  [SyntaxKind.AmpersandEqualsToken]: '&=',
+  [SyntaxKind.BarToken]: '|',
+  [SyntaxKind.BarBarToken]: '||',
+  [SyntaxKind.BarEqualsToken]: '|=',
+  [SyntaxKind.EndOfFileToken]: '\n',
 };
 
 export const emitToken = <T extends SyntaxKind>(node: Token<T>, context: Context) => ({

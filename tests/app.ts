@@ -4,7 +4,7 @@ import { Sources, HIGH, LOW, run, createSinks } from '@amnisio/arduino-uno';
 let brightness = 0;
 let change = 5;
 
-const getFadeValue = (led: number) => {
+const getBrightness = (led: number) => {
   brightness = brightness + change;
   if (brightness <= LOW || brightness >= HIGH) change = -change;
   return brightness;
@@ -12,7 +12,7 @@ const getFadeValue = (led: number) => {
 
 function fade(arduino: Sources) {
   const sinks = createSinks();
-  sinks.D10$ = periodic(30).map(getFadeValue);
+  sinks.D10$ = periodic(30).map(getBrightness);
   return sinks;
 }
 
