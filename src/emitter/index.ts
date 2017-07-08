@@ -109,6 +109,12 @@ export const emit = (node: Node, context: Context): EmitResult => {
     case SyntaxKind.LessThanEqualsToken:
     case SyntaxKind.GreaterThanToken:
     case SyntaxKind.GreaterThanEqualsToken:
+    case SyntaxKind.AmpersandToken:
+    case SyntaxKind.AmpersandAmpersandToken:
+    case SyntaxKind.AmpersandEqualsToken:
+    case SyntaxKind.BarToken:
+    case SyntaxKind.BarBarToken:
+    case SyntaxKind.BarEqualsToken:
       return emitToken(node as Token<SyntaxKind>, context);
     case SyntaxKind.FirstLiteralToken:
       return emitFirstLiteralToken(<LiteralLikeNode>node, context);
