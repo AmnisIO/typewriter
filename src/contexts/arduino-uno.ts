@@ -5,6 +5,6 @@ export const context = {
   createSinks: 'sinks_create',
   run: 'gyrus_run',
   run_wrapper: 'void setup() {\n  :::\n}\n\nvoid loop() {\n\t\n}\n',
-  HIGH: 'GYRUS_HIGH',
-  LOW: 'GYRUS_LOW' 
+  HIGH: 'GYRUS_SIGNAL_LEVEL_HIGH',
+  LOW: 'GYRUS_SIGNAL_LEVEL_LOW' 
 };
