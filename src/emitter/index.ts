@@ -94,6 +94,10 @@ export const emit = (node: Node, context: Context): EmitResult => {
     case SyntaxKind.SlashEqualsToken:
     case SyntaxKind.PercentToken:
     case SyntaxKind.PercentEqualsToken:
+    case SyntaxKind.LessThanToken:
+    case SyntaxKind.LessThanEqualsToken:
+    case SyntaxKind.GreaterThanToken:
+    case SyntaxKind.GreaterThanEqualsToken:
       return emitToken(node as Token<SyntaxKind>, context);
     case SyntaxKind.FirstLiteralToken:
       return emitFirstLiteralToken(<LiteralLikeNode>node, context);
