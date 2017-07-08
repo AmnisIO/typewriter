@@ -20,6 +20,10 @@ const tokensLookup = {
   [SyntaxKind.SlashEqualsToken]: '/=',
   [SyntaxKind.PercentToken]: '%',
   [SyntaxKind.PercentEqualsToken]: '%=',
+  [SyntaxKind.LessThanToken]: '<',
+  [SyntaxKind.LessThanEqualsToken]: '<=',
+  [SyntaxKind.GreaterThanToken]: '>',
+  [SyntaxKind.GreaterThanEqualsToken]: '>=',
   [SyntaxKind.EndOfFileToken]: '\n'
 };
 
