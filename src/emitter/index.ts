@@ -1,4 +1,4 @@
-import { Node, SyntaxKind, SourceFile, TypeReferenceNode, Identifier, Block, ExpressionStatement, BinaryExpression, PropertyAccessExpression, LiteralLikeNode, FunctionLikeDeclaration, ReturnStatement, VariableStatement, ImportDeclaration, VariableDeclaration, CallExpression, ConditionalExpression, QuestionToken, ColonToken, Token } from 'typescript';
+import { Node, SyntaxKind, SourceFile, TypeReferenceNode, Identifier, Block, ExpressionStatement, BinaryExpression, PropertyAccessExpression, LiteralLikeNode, FunctionLikeDeclaration, ReturnStatement, VariableStatement, ImportDeclaration, VariableDeclaration, CallExpression, ConditionalExpression, QuestionToken, ColonToken, Token, IfStatement } from 'typescript';
 import { emitImportDeclaration } from './imports';
 import { emitFunctionLikeDeclaration, emitVariableDeclaration } from './declarations';
 import { emitCallExpression, emitConditionalExpression, emitBinaryExpression, emitPropertyAccessExpression } from './expressions';
@@ -6,7 +6,7 @@ import { emitToken, emitFirstLiteralToken } from './tokens';
 import { emitIdentifier, emitType } from './identifiers';
 import { emitBlock } from './blocks';
 import { emitSourceFile } from './source';
-import { emitReturnStatement, emitVariableStatement, emitExpressionStatement } from './statements';
+import { emitReturnStatement, emitVariableStatement, emitExpressionStatement, emitIfStatement } from './statements';
 import { Context } from '../contexts';
 
 export interface EmitResult {
@@ -50,6 +50,8 @@ export const emit = (node: Node, context: Context): EmitResult => {
       return emitReturnStatement(<ReturnStatement>node, context);
     case SyntaxKind.VariableStatement:
       return emitVariableStatement(<VariableStatement>node, context);
+    case SyntaxKind.IfStatement:
+      return emitIfStatement(<IfStatement>node, context);
 
     // Declarations
     case SyntaxKind.ImportDeclaration:
