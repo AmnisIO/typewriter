@@ -4,7 +4,6 @@ import {
   transform,
   TypeInjectorTransformer,
   FunctionBlockTransformer,
-  MethodChainTransformer,
   AnonymousFunctionTransformer
 } from './transformers';
 import * as fs from 'fs';
@@ -23,7 +22,6 @@ export const getTypeWrittenString = (file: string): string => {
   const transformers = [
     new FunctionBlockTransformer(),
     new AnonymousFunctionTransformer(typeChecker),
-    new MethodChainTransformer(typeChecker),
     new TypeInjectorTransformer(typeChecker)
   ];
   const transformedSourceFile = transform(sourceFile, transformers);
