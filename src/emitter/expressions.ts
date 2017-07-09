@@ -7,11 +7,16 @@ import { EmitResult, emit, emitString } from './';
 import { emitToken } from './tokens';
 
 export const emitCallExpression = ({ expression, ...node }: CallExpression, context: Context) => {
-  const args =
-    expression.kind === SyntaxKind.PropertyAccessExpression
-      ? [(<PropertyAccessExpression>expression).expression, ...node.arguments]
-      : node.arguments;
-  const emitted_string = `${emitString(expression, context)}(${args.map(arg => emitString(arg, context)).join(', ')})`;
+  const isPropertyAccessCall = expression.kind === SyntaxKind.PropertyAccessExpression;
+  if (!isPropertyAccessCall) {
+    return {
+      context,
+      emitted_string: `${emitString(expression, context)}(${node.arguments.map(arg => emitString(arg, context)).join(', ')})`
+    };
+  }
+  const propertyAccessExpression = <PropertyAccessExpression>expression;
+  const args = [propertyAccessExpression.expression, ...node.arguments];
+  const emitted_string = `${emitString(propertyAccessExpression.name, context)}(${args.map(arg => emitString(arg, context)).join(', ')})`;
   return {
     context,
     emitted_string

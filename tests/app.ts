@@ -19,7 +19,11 @@ const getCurrentBrightness = (event: Int) => {
 // Every 30ms, the brightness of the LED attached to D10 is updated.
 const application = (arduino: Sources) => {
   const sinks = createSinks();
-  sinks.D10$ = periodic(30).map(getCurrentBrightness);
+  const sample$ = periodic(50);
+  const fade$ = sample$.map(getCurrentBrightness);
+  sinks.D10$ = fade$;
+  sinks.D5$ = fade$;
+  sinks.LED$ = sample$.sample(arduino.LED$).map(led => led === LOW ? HIGH : LOW);
   return sinks;
 };
 
