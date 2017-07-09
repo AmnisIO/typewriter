@@ -1,30 +1,20 @@
 import { Int, periodic } from '@amnisio/rivulet';
 import { Sources, HIGH, LOW, run, createSinks } from '@amnisio/arduino-uno';
 
-// Initialize brightness and change
-let brightness = 0;
-let change = 5;
+const invert = (value: Int) => value == LOW ? HIGH : LOW;
 
-const getCurrentBrightness = (event: Int) => {
-  // Make the change to brightness
-  brightness = brightness + change;
-  // If the cycle has ended, invert the change
-  if (brightness <= LOW || brightness >= HIGH) change = -change;
-  // Return the current brightness
-  return brightness;
-}
-
-// Sample application that will fade an LED attached to the D10 pin using PWM.
-// Requires an LED to be connected at pin D10.
-// Every 30ms, the brightness of the LED attached to D10 is updated.
+// Sample application that will blink multiple LEDs attached to the arduino UNO at various cycles.
+// Requires an LED to be connected at pin D5.
+// Requires another LED to be connected at pin D10.
+// The on-board LED is used as a third LED.
+// The led at pin D5 blinks every 100ms.
+// The led at pin D10 blinks every 250ms.
+// The on board LED blinks every 500ms.
+// That's literally how easy it is to describe asynchronous actions with FRP.
 const application = (arduino: Sources) => {
   const sinks = createSinks();
-  const sample$ = periodic(50);
-  const fade$ = sample$.map(getCurrentBrightness);
-  sinks.D10$ = fade$;
-  sinks.D5$ = fade$;
-  sinks.LED$ = sample$.sample(arduino.LED$).map(led => led === LOW ? HIGH : LOW);
+  sinks.D5$ = periodic(100).sample(arduino.D5$).map(invert);
+  sinks.D10$ = periodic(250).sample(arduino.D10$).map(invert);
+  sinks.LED$ = periodic(500).sample(arduino.LED$).map(invert);
   return sinks;
 };
-
-run(application);
