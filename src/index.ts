@@ -21,8 +21,8 @@ export const getTypeWrittenString = (file: string): string => {
   const { sourceFile, typeChecker } = parse([file]);
   const transformers = [
     new FunctionBlockTransformer(),
-    new AnonymousFunctionTransformer(typeChecker),
-    new TypeInjectorTransformer(typeChecker)
+    new TypeInjectorTransformer(typeChecker),
+    new AnonymousFunctionTransformer(typeChecker)
   ];
   const transformedSourceFile = transform(sourceFile, transformers);
   return emitString(transformedSourceFile, { include_headers: '' });
