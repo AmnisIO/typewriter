@@ -7,7 +7,8 @@ import {
   ArrowFunction,
   Block,
   Expression,
-  FunctionTypeNode
+  FunctionTypeNode,
+  Node
 } from 'typescript';
 import { Context } from '../contexts';
 import { EmitResult, emit, emitString } from './';
@@ -38,7 +39,7 @@ export const emitVariableDeclaration = (node: VariableDeclaration, context: Cont
   const type = node.type;
   const emitted_string =
     node.initializer.kind === SyntaxKind.ArrowFunction
-      ? emitString({ ...node.initializer, name: node.name }, context)
+      ? emitString({ ...node.initializer, name: node.name } as Node, context)
       : `${emitString(type, context)} ${emitString(node.name, context)} = ${emitString(node.initializer, context)}`;
   return {
     context,

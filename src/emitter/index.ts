@@ -1,13 +1,14 @@
 import {
   Node, SyntaxKind, SourceFile, TypeReferenceNode, Identifier, Block, ExpressionStatement, BinaryExpression, PropertyAccessExpression,
   LiteralLikeNode, FunctionLikeDeclaration, ReturnStatement, VariableStatement, ImportDeclaration, VariableDeclaration, CallExpression,
-  ConditionalExpression, QuestionToken, ColonToken, Token, IfStatement, PrefixUnaryExpression, PostfixUnaryExpression, KeywordTypeNode
+  ConditionalExpression, QuestionToken, ColonToken, Token, IfStatement, PrefixUnaryExpression, PostfixUnaryExpression, KeywordTypeNode,
+  ParenthesizedExpression
 } from 'typescript';
 import { emitImportDeclaration } from './imports';
 import { emitFunctionLikeDeclaration, emitVariableDeclaration } from './declarations';
 import {
   emitCallExpression, emitConditionalExpression, emitBinaryExpression, emitPropertyAccessExpression, emitPrefixUnaryExpression,
-  emitPostfixUnaryExpression
+  emitPostfixUnaryExpression, emitParenthesizedExpression
 } from './expressions';
 import { emitToken, emitFirstLiteralToken } from './tokens';
 import { emitKeyword } from './keywords';
@@ -83,6 +84,8 @@ export const emit = (node: Node, context: Context): EmitResult => {
       return emitPrefixUnaryExpression(<PrefixUnaryExpression>node, context);
     case SyntaxKind.PostfixUnaryExpression:
       return emitPostfixUnaryExpression(<PostfixUnaryExpression>node, context);
+    case SyntaxKind.ParenthesizedExpression:
+      return emitParenthesizedExpression(<ParenthesizedExpression>node, context);
 
     // Clauses
 
