@@ -6,7 +6,7 @@
 #include <Gyrus.h>
 
 any _typewriter_anonymous_1(int brightness, int event) {
-  return brightness == 101 ? 0 : ignored_ParenthesizedExpression;
+  return brightness == 101 ? 0 : (brightness + 1);
 }
 
 int _typewriter_anonymous_2(int brightness) {
