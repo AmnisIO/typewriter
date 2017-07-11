@@ -20,9 +20,9 @@
     "debug": "tsc && node --nolazy --inspect-brk=9229 bin/typewriter.js --file tests/app.ts --outfile tests/app.c"
   },
   "devDependencies": {
-    "@amnisio/arduino-uno": "^2.0.1",
-    "@amnisio/rivulet": "^2.0.1",
-    "@types/node": "^7.0.29",
+    "@amnisio/arduino-uno": "^3.0.0",
+    "@amnisio/rivulet": "^3.0.0",
+    "@types/node": "^7.0.34",
     "@types/ramda": "^0.24.1"
   },
   "dependencies": {
@@ -30,7 +30,7 @@
     "fs": "^0.0.1-security",
     "path": "^0.12.7",
     "ramda": "^0.24.1",
-    "typescript": "^2.3.4",
+    "typescript": "^2.4.1",
     "yargs": "^8.0.2"
   }
 }
