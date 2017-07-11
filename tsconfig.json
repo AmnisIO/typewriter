@@ -8,10 +8,7 @@
     "inlineSourceMap": true,
     "inlineSources": true,
     "target": "ES5",
-    "outDir": "dist/",
-    "types": [
-      "node"
-    ]
+    "outDir": "dist/"
   },
   "formatCodeOptions": {
     "indentSize": 2,
