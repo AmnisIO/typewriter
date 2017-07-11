@@ -1,6 +1,6 @@
 import {
   SyntaxKind, CallExpression, Identifier, ConditionalExpression, BinaryExpression, PropertyAccessExpression, PrefixUnaryExpression,
-  PostfixUnaryExpression, createToken
+  PostfixUnaryExpression, createToken, ParenthesizedExpression
 } from 'typescript';
 import { Context } from '../contexts';
 import { EmitResult, emit, emitString } from './';
@@ -46,4 +46,9 @@ export const emitPrefixUnaryExpression = ({ operand, operator }: PrefixUnaryExpr
 export const emitPostfixUnaryExpression = ({ operand, operator }: PostfixUnaryExpression, context: Context): EmitResult => ({
   context,
   emitted_string: `${emitString(operand, context)}${emitString(createToken(operator), context)}`
+});
+
+export const emitParenthesizedExpression = ({ expression }: ParenthesizedExpression, context: Context): EmitResult => ({
+  context,
+  emitted_string: `(${emitString(expression, context)})`
 });
