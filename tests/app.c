@@ -5,13 +5,13 @@
 #include <Arduino.h>
 #include <Gyrus.h>
 
-any _typewriter_anonymous_1(int brightness, int event) {
-  return brightness == 101 ? 0 : (brightness + 1);
+int _typewriter_anonymous_1(int brightness, int event) {
+  return brightness == 49 ? 0 : ++brightness;
 }
 
 int _typewriter_anonymous_2(int brightness) {
-  int x = brightness % 51;
-  return brightness > x ? 51 - x : x;
+  int x = brightness % 25;
+  return brightness > x ? 25 - x : x;
 }
 
 int _typewriter_anonymous_3(int brightness) {

@@ -8,7 +8,7 @@ const application = (arduino: Sources) => {
   const sinks = createSinks();
   sinks.D10$ =
     periodic(30)
-      .fold((brightness, event) => brightness == 101 ? 0 : (brightness + 1), 0)
+      .fold((brightness, event) => brightness == 101 ? 0 : ++brightness, 0)
       .map(brightness => {
         const x = brightness % 51;
         return brightness > x ? 51 - x : x;
